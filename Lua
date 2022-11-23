@@ -1,1195 +1,178 @@
-game:GetService("StarterGui"):SetCore("SendNotification",{
-                Title = "Credits";
-                Text = "Modified By Xno";
-                Duration = 3.5;
-            })
--- Gui to Lua
--- Version: 3.2
- 
--- Instances:
- 
-local main = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local up = Instance.new("TextButton")
-local down = Instance.new("TextButton")
-local onof = Instance.new("TextButton")
-local TextLabel = Instance.new("TextLabel")
-local plus = Instance.new("TextButton")
-local speed = Instance.new("TextLabel")
-local mine = Instance.new("TextButton")
- 
---Properties:
- 
-main.Name = "main"
-main.Parent = game.CoreGui
-main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
- 
-Frame.Parent = main
-Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Frame.Position = UDim2.new(0.100320168, 0, 0.379746825, 0)
-Frame.Size = UDim2.new(0, 190, 0, 7)
- 
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Rayfield/main/source"))()
 
- 
-onof.Name = "onof"
-onof.Parent = Frame
-onof.BackgroundColor3 = Color3.fromRGB(255, 249, 74)
-onof.Position = UDim2.new(0, 1, 1, 0.5)
-onof.Size = UDim2.new(0, 56, 0, 28)
-onof.Font = Enum.Font.SourceSans
-onof.Text = "Fly"
-onof.TextColor3 = Color3.fromRGB(255,0,0)
-onof.TextSize = 4000
- 
+getgenv().SecureMode = true
 
- 
-speeds = 1
- 
-local speaker = game:GetService("Players").LocalPlayer
- 
-local chr = game.Players.LocalPlayer.Character
-local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
- 
-nowe = false
- 
-Frame.Active = true -- main = gui
-Frame.Draggable = true
- 
-onof.MouseButton1Down:connect(function()
- 
-	if nowe == true then
-		nowe = false
- 
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,true)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,true)
-		speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
-	else 
-		nowe = true
- 
- 
- 
-		for i = 1, speeds do
-			spawn(function()
- 
-				local hb = game:GetService("RunService").Heartbeat	
- 
- 
-				tpwalking = true
-				local chr = game.Players.LocalPlayer.Character
-				local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-				while tpwalking and hb:Wait() and chr and hum and hum.Parent do
-					if hum.MoveDirection.Magnitude > 0 then
-						chr:TranslateBy(hum.MoveDirection)
-					end
-				end
- 
-			end)
+local Window = Rayfield:CreateWindow({
+	Name = "XN Hub",
+	LoadingTitle = "XN Hub",
+	LoadingSubtitle = "By Xno",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "XN Hub",
+	},
+	Discord = {
+		Enabled = true,
+		Invite = "3esCY2q32n", -- The Discord invite code, do not include discord.gg/
+		RememberJoins = false, -- Set this to false to make them join the discord every time they load it up
+	},
+	KeySystem = true, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "XN Hub",
+		Subtitle = "Key System",
+		Note = "Join the discord (https://discord.gg/3esCY2q32n)",
+		FileName = "XN Hub",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "ohio",
+	},
+})
+Rayfield:Notify({
+	Title = "Welcome to XN Hub",
+	Content = "Notification Content",
+	Duration = 6.5,
+	Image = 4483362458,
+	Actions = { -- Notification Buttons
+		Ignore = {
+			Name = "Okay!",
+			Callback = function()
+				print("The user tapped Okay!")
+			end,
+		},
+	},
+})
+
+local Main = Window:CreateTab("Main", 4483362458) -- Title, Image
+local Section = Main:CreateSection("GPO")
+local Button = Main:CreateButton({
+	Name = "Infinite Jump",
+	Callback = function()
+		local g = getgenv()
+
+		if g._swim then
+			g._swim:Disconnect()
+			g._swim = nil
 		end
-		game.Players.LocalPlayer.Character.Animate.Disabled = true
-		local Char = game.Players.LocalPlayer.Character
-		local Hum = Char:FindFirstChildOfClass("Humanoid") or Char:FindFirstChildOfClass("AnimationController")
- 
-		for i,v in next, Hum:GetPlayingAnimationTracks() do
-			v:AdjustSpeed(0)
-		end
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,false)
-		speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,false)
-		speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
-	end
- 
- 
- 
- 
- 
-		local plr = game.Players.LocalPlayer
-		local UpperTorso = plr.Character.LowerTorso
-		local flying = true
-		local deb = true
-		local ctrl = {f = 0, b = 0, l = 0, r = 0}
-		local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-		local maxspeed = 50
-		local speed = 0
- 
- 
-		local bg = Instance.new("BodyGyro", UpperTorso)
-		bg.P = 9e4
-		bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-		bg.cframe = UpperTorso.CFrame
-		local bv = Instance.new("BodyVelocity", UpperTorso)
-		bv.velocity = Vector3.new(0,0.1,0)
-		bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
-		if nowe == true then
-			plr.Character.Humanoid.PlatformStand = true
-		end
-		while nowe == true or game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 do
-			wait()
- 
-			if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
-				speed = speed+.5+(speed/maxspeed)
-				if speed > maxspeed then
-					speed = maxspeed
-				end
-			elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
-				speed = speed-1
-				if speed < 0 then
-					speed = 0
-				end
+
+		local u = game:GetService("UserInputService")
+		g._swim = u.InputBegan:Connect(function(input, gameProcessedEvent)
+			if gameProcessedEvent then
+				return
 			end
-			if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
-				lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
-			elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
-			else
-				bv.velocity = Vector3.new(0,0,0)
-			end
- 
-			bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
-		end
-		ctrl = {f = 0, b = 0, l = 0, r = 0}
-		lastctrl = {f = 0, b = 0, l = 0, r = 0}
-		speed = 0
-		bg:Destroy()
-		bv:Destroy()
-		plr.Character.Humanoid.PlatformStand = false
-		game.Players.LocalPlayer.Character.Animate.Disabled = false
-		tpwalking = false
- 
- 
- 
- 
- 
- 
- 
- 
- 
-end)
- 
- 
-up.MouseButton1Down:connect(function()
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,2,0)
- 
-end)
- 
- 
-down.MouseButton1Down:connect(function()
- 
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-2,0)
- 
-end)
- 
- 
-game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
-	wait(0.7)
-	game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
-	game.Players.LocalPlayer.Character.Animate.Disabled = false
- 
-end)
- 
- 
-plus.MouseButton1Down:connect(function()
-	speeds = speeds + 1
-	speed.Text = speeds
-	if nowe == true then
- 
- 
-	tpwalking = false
-	for i = 1, speeds do
-		spawn(function()
- 
-			local hb = game:GetService("RunService").Heartbeat	
- 
- 
-			tpwalking = true
-			local chr = game.Players.LocalPlayer.Character
-			local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-			while tpwalking and hb:Wait() and chr and hum and hum.Parent do
-				if hum.MoveDirection.Magnitude > 0 then
-					chr:TranslateBy(hum.MoveDirection)
-				end
-			end
- 
-		end)
-		end
-		end
-end)
-mine.MouseButton1Down:connect(function()
-	if speeds == 1 then
-		speed.Text = 'can not be less than 1'
-		wait(1)
-		speed.Text = speeds
-	else
-	speeds = speeds - 1
-		speed.Text = speeds
-		if nowe == true then
-	tpwalking = false
-	for i = 1, speeds do
-		spawn(function()
- 
-			local hb = game:GetService("RunService").Heartbeat	
- 
- 
-			tpwalking = true
-			local chr = game.Players.LocalPlayer.Character
-			local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-			while tpwalking and hb:Wait() and chr and hum and hum.Parent do
-				if hum.MoveDirection.Magnitude > 0 then
-					chr:TranslateBy(hum.MoveDirection)
-				end
-			end
- 
-		end)
-		end
-		end
-		end
-end)
 
-
-
-
-local http_request = http_request or request or HttpPost or syn.request or http.request
-if syn then
-    http_request = syn.request
-end
-
-
-
-	local UIS = game:GetService("UserInputService")
-	function dragify(Frame)
-		local dragToggle = nil
-		local dragSpeed = 0
-		local dragInput = nil
-		local dragStart = nil
-		local dragPos = nil
-		local function updateInput(input)
-			local Delta = input.Position - dragStart
-			local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-			game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.25), {Position = Position}):Play()
-		end
-		Frame.InputBegan:Connect(function(input)
-			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
-				dragToggle = true
-				dragStart = input.Position
-				startPos = Frame.Position
-				input.Changed:Connect(function()
-					if input.UserInputState == Enum.UserInputState.End then
-						dragToggle = false
-					end
-				end)
+			if input.KeyCode == Enum.KeyCode.Space then
+				game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			end
 		end)
-		Frame.InputChanged:Connect(function(input)
-			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-				dragInput = input
+	end,
+})
+
+local Slider = Main:CreateSlider({
+	Name = "WalkSpeed (cant revert)",
+	Range = { 0, 100 },
+	Increment = 10,
+	Suffix = "Speed",
+	CurrentValue = 10,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		-- The function that takes place when the slider changes
+		-- The variable (Value) is a number which correlates to the value the slider is currently at
+	end,
+})
+getgenv().Speed = 70
+local mt = getrawmetatable(game)
+local old = mt.__newindex
+setreadonly(mt, false)
+mt.__newindex = newcclosure(function(t, k, v)
+	pcall(function()
+		if t == game:GetService("Players").LocalPlayer.Character.Humanoid and k == "WalkSpeed" then
+			v = getgenv().Speed
+		end
+	end)
+	return old(t, k, v)
+end)
+
+-- Main:CreateSlider("JumpPower", 50, 200, function(t)
+-- 	getgenv().Speed = 70
+-- 	local mt = getrawmetatable(game)
+-- 	local old = mt.__newindex
+-- 	setreadonly(mt, false)
+-- 	mt.__newindex = newcclosure(function(t, k, v)
+-- 		pcall(function()
+-- 			if t == game:GetService("Players").LocalPlayer.Character.Humanoid and k == "JumpPower" then
+-- 				v = getgenv().Speed
+-- 			end
+-- 		end)
+-- 		return old(t, k, v)
+-- 	end)
+-- end)
+-- Main:CreateLabel("Put speed 20-29 and its auto no stun.")
+
+local Button = Main:CreateButton({
+	Name = "ESP (Right Alt)",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/XnoWs/GPO/main/readme"))()
+	end,
+})
+
+local Toggle = Main:CreateToggle({
+	Name = "troll toggle",
+	CurrentValue = false,
+	Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		local player = game.Players.LocalPlayer
+		local mouse = player:GetMouse()
+
+		bind = "y"
+		bind2 = "n"
+
+		mouse.KeyDown:connect(function(key)
+			if key == bind then
+				player.Character.HumanoidRootPart.CFrame = CFrame.new(1254.09656, 137.906067, -172.128204)
 			end
 		end)
-		game:GetService("UserInputService").InputChanged:Connect(function(input)
-			if input == dragInput and dragToggle then
-				updateInput(input)
-			end
-		end)
-	end
-	
-	local Lib = {}
-	
-	function Lib:Window(title)
-		local GUI = Instance.new("ScreenGui")
-		local Main = Instance.new("ImageLabel")
-		local TabList = Instance.new("ImageLabel")
-		local tab_Container = Instance.new("ScrollingFrame")
-		local UIListLayout_tab = Instance.new("UIListLayout")
-	
-		local TopBar = Instance.new("ImageLabel")
-		local TopIcon = Instance.new("ImageLabel")
-		local Title_top = Instance.new("TextLabel")
-		local UICorner_Main = Instance.new("UICorner")
-		local Containers = Instance.new("Folder")
-	
-		GUI.Name = "GUI"
-		GUI.Parent = game.CoreGui
-		GUI.ResetOnSpawn = false
-	
-		Main.Name = "Main"
-		Main.Parent = GUI
-		Main.BackgroundColor3 = Color3.fromRGB(39, 41, 46)
-		Main.Position = UDim2.new(0.1113168, 0, 0.0669878125, 0)
-		Main.Size = UDim2.new(0, 511, 0, 428)
-		Main.Image = "rbxassetid://2151741365"
-		Main.ImageColor3 = Color3.fromRGB(33, 35, 40)
-		Main.ImageTransparency = 0.900
-		Main.ScaleType = Enum.ScaleType.Tile
-		Main.SliceCenter = Rect.new(4, 4, 296, 296)
-		Main.TileSize = UDim2.new(0, 250, 0, 250)
-	
-		TabList.Name = "TabList"
-		TabList.Parent = Main
-		TabList.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TabList.BackgroundTransparency = 1
-		TabList.ClipsDescendants = true
-		TabList.Position = UDim2.new(0, 0, 0, 38)
-		TabList.Size = UDim2.new(0.106938727, 126, 1, -38)
-		TabList.ZIndex = 3
-		TabList.Image = "rbxassetid://5012534273"
-		TabList.ImageColor3 = Color3.fromRGB(37, 39, 44)
-		TabList.ScaleType = Enum.ScaleType.Slice
-		TabList.SliceCenter = Rect.new(4, 4, 296, 296)
-	
-		tab_Container.Name = "tab_Container"
-		tab_Container.Parent = TabList
-		tab_Container.Active = true
-		tab_Container.BackgroundTransparency = 1.000
-		tab_Container.Position = UDim2.new(0, 0, 0, 10)
-		tab_Container.Size = UDim2.new(1, 0, 1, -20)
-		tab_Container.CanvasSize = UDim2.new(0, 0, 0, 314)
-		tab_Container.ScrollBarThickness = 0
-	
-		UIListLayout_tab.Name = "UIListLayout_tab"
-		UIListLayout_tab.Parent = tab_Container
-		UIListLayout_tab.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_tab.Padding = UDim.new(0, 1)
-	
-	
-		TopBar.Name = "TopBar"
-		TopBar.Parent = Main
-		TopBar.BackgroundColor3 = Color3.fromRGB(255,0,0)
-		TopBar.BackgroundTransparency = 1.000
-		TopBar.ClipsDescendants = true
-		TopBar.Size = UDim2.new(1, 0, 0, 38)
-		TopBar.ZIndex = 5
-		TopBar.Image = "rbxassetid://4595286933"
-		TopBar.ImageColor3 = Color3.fromRGB(37, 39, 44)
-		TopBar.ScaleType = Enum.ScaleType.Slice
-		TopBar.SliceCenter = Rect.new(4, 4, 296, 296)
-	
-		TopIcon.Name = "TopIcon"
-		TopIcon.Parent = TopBar
-		TopIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		TopIcon.BackgroundTransparency = 1.000
-		TopIcon.BorderSizePixel = 0
-		TopIcon.Position = UDim2.new(0, 0, 0.157894731, 0)
-		TopIcon.Size = UDim2.new(0, 49, 0, 32)
-		TopIcon.ZIndex = 5
-		TopIcon.Image = "rbxassetid://7628278821"
-		TopIcon.ScaleType = Enum.ScaleType.Fit
-	
-		Title_top.Name = "Title_top"
-		Title_top.Parent = TopBar
-		Title_top.AnchorPoint = Vector2.new(0, 0.5)
-		Title_top.BackgroundTransparency = 1.000
-		Title_top.Position = UDim2.new(0.0313111544, 40, 0.578947365, 0)
-		Title_top.Size = UDim2.new(0.1095891, 76, 0.842105269, 0)
-		Title_top.ZIndex = 5
-		Title_top.Font = Enum.Font.FredokaOne
-		Title_top.Text = title
-		Title_top.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Title_top.TextSize = 15.000
-		Title_top.TextXAlignment = Enum.TextXAlignment.Left
-	
-		UICorner_Main.CornerRadius = UDim.new(0.0199999996, 0)
-		UICorner_Main.Name = "UICorner_Main"
-		UICorner_Main.Parent = Main
-	
-		Containers.Name = "Containers"
-		Containers.Parent = Main
-	
-		dragify(Main)
-	
-		local TabLib = {}
-	
-		function TabLib:Tab(name, bool, opacity, id)
-	
-			local ContainerTab = Instance.new("ScrollingFrame")
-			local UIListLayout_ContainerTab = Instance.new("UIListLayout")
-	
-			local TabButton = Instance.new("Frame")
-			local UIGradient_tab = Instance.new("UIGradient")
-			local tab_Icon = Instance.new("ImageLabel")
-			local tab_Title = Instance.new("TextLabel")
-	
-	
-			TabButton.Name = name.."TButton"
-			TabButton.Parent = tab_Container
-			TabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			TabButton.BorderSizePixel = 0
-			TabButton.Position = UDim2.new(0, 0, 0.0972972959, 0)
-			TabButton.Size = UDim2.new(0, 180, 0, 37)
-			TabButton.ZIndex = 3
-	
-			UIGradient_tab.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(46, 49, 56)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(37, 39, 44))}
-			UIGradient_tab.Name = name.."UIGradient_tab"
-			UIGradient_tab.Offset = Vector2.new(-1, 0)
-			UIGradient_tab.Parent = TabButton
-	
-			tab_Icon.Name = "tab_Icon"
-			tab_Icon.Parent = TabButton
-			tab_Icon.AnchorPoint = Vector2.new(0, 0.5)
-			tab_Icon.BackgroundTransparency = 1.000
-			tab_Icon.Position = UDim2.new(0, 12, 0.5, 0)
-			tab_Icon.Size = UDim2.new(0, 16, 0, 16)
-			tab_Icon.ZIndex = 3
-			tab_Icon.Image = "rbxassetid://"..id
-			tab_Icon.ScaleType = Enum.ScaleType.Fit
-			tab_Icon.ImageTransparency = opacity
-	
-			tab_Title.Name = "tab_Title"
-			tab_Title.Parent = TabButton
-			tab_Title.AnchorPoint = Vector2.new(0, 0.5)
-			tab_Title.BackgroundTransparency = 1.000
-			tab_Title.Position = UDim2.new(0, 40, 0.5, 0)
-			tab_Title.Size = UDim2.new(0, 76, 1, 0)
-			tab_Title.ZIndex = 3
-			tab_Title.Font = Enum.Font.FredokaOne
-			tab_Title.Text = name	
-			tab_Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			tab_Title.TextSize = 12.000
-			tab_Title.TextXAlignment = Enum.TextXAlignment.Left
-			tab_Title.TextTransparency = opacity
-	
-			ContainerTab.Name = name.."ContainerTab"
-			ContainerTab.Parent = Containers
-			ContainerTab.Active = true
-			ContainerTab.Visible = bool
-			ContainerTab.BackgroundTransparency = 1.000
-			ContainerTab.BorderSizePixel = 0
-			ContainerTab.Position = UDim2.new(0, 188, 0, 46)
-			ContainerTab.Size = UDim2.new(0.891466737, -142, 1, -56)
-			ContainerTab.CanvasSize = UDim2.new(0, 0, 0, 342)
-			ContainerTab.ScrollBarThickness = 3
-			ContainerTab.ScrollBarImageTransparency = 0.7
-			ContainerTab.ScrollBarImageColor3 = Color3.fromRGB(18, 18, 18)
-	
-			UIListLayout_ContainerTab.Name = name.."UIListLayout_ContainerTab"
-			UIListLayout_ContainerTab.Parent = ContainerTab
-			UIListLayout_ContainerTab.SortOrder = Enum.SortOrder.LayoutOrder
-			UIListLayout_ContainerTab.Padding = UDim.new(0, 10)
-	
-			ContainerTab.ChildAdded:Connect(function()
-				ContainerTab.CanvasSize = ContainerTab.CanvasSize + UDim2.fromOffset(0, 80)
-			end)
-	
-			local offset1 = {Offset = Vector2.new(0, 0)} 
-			local offset2 = {Offset = Vector2.new(-1, 0)} 
-			local ti = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-			local create1 = game:GetService("TweenService"):Create(UIGradient_tab, ti, offset1)
-			local create2 = game:GetService("TweenService"):Create(UIGradient_tab, ti, offset2)
-			local hover = 1
-	
-			TabButton.MouseEnter:Connect(function()
-				create1:Play() 
-			end)
-	
-			TabButton.MouseLeave:Connect(function()
-	
-				create2:Play()
-				hover = hover + 1
-	
-			end)
-	
-			TabButton.InputBegan:Connect(function(InputObject)
-				if InputObject.UserInputType == Enum.UserInputType.MouseButton1 then
-	
-					for i,v in next, Containers:GetChildren() do					
-						v.Visible = false
-					end
-	
-					for i, v in next, tab_Container:GetChildren() do
-						if v:IsA("Frame") then
-							v.tab_Icon.ImageTransparency = 0.5
-							v.tab_Title.TextTransparency = 0.5
-						end
-					end
-					ContainerTab.Visible = true
-					TabButton.tab_Title.TextTransparency = 0
-					TabButton.tab_Icon.ImageTransparency = 0 
-	
-				end
-			end)
-	
-			local sec = {}
-	
-			function sec:Section(sname)
-				local Section = Instance.new("ImageLabel")
-				local Section_Items = Instance.new("Frame")
-				local section_Title = Instance.new("TextLabel")
-				local UIListLayout_section = Instance.new("UIListLayout")
-	
-				Section.Name = sname.."Section"
-				Section.Parent = ContainerTab
-				Section.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-				Section.BackgroundTransparency = 1.000
-				Section.ClipsDescendants = true
-				Section.Size = UDim2.new(1.015, -10 , -0.09, 104)
-				Section.ZIndex = 2
-				Section.Image = "rbxassetid://5028857472"
-				Section.ImageColor3 = Color3.fromRGB(36, 38, 43)
-				Section.ScaleType = Enum.ScaleType.Slice
-				Section.SliceCenter = Rect.new(4, 4, 296, 296)
-	
-				Section_Items.Name = sname.."Section_Items"
-				Section_Items.Parent = Section
-				Section_Items.Active = true
-				Section_Items.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-				Section_Items.BackgroundTransparency = 1.000
-				Section_Items.BorderSizePixel = 0
-				Section_Items.Position = UDim2.new(0, 8, 0, 8)
-				Section_Items.Size = UDim2.new(1, -16, 1, -16)
-	
-				section_Title.Name = sname.."section_Title"
-				section_Title.Parent = Section_Items
-				section_Title.BackgroundTransparency = 1.000
-				section_Title.Size = UDim2.new(1, 0, 0, 20)
-				section_Title.ZIndex = 2
-				section_Title.Font = Enum.Font.FredokaOne
-				section_Title.Text = "  "..sname
-				section_Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-				section_Title.TextSize = 12.000
-				section_Title.TextXAlignment = Enum.TextXAlignment.Left
-	
-				UIListLayout_section.Name = sname.."UIListLayout_section"
-				UIListLayout_section.Parent = Section_Items
-				UIListLayout_section.SortOrder = Enum.SortOrder.LayoutOrder
-				UIListLayout_section.Padding = UDim.new(0, 4)
-	
-				Section.ChildAdded:Connect(function()
-					Section.Parent.CanvasSize = ContainerTab.CanvasSize + UDim2.fromOffset(0, 50)
-				end)
-	
-				Section_Items.ChildAdded:Connect(function()
-					--print("Added")
-					local count = Section_Items:GetChildren()
-	
-					if #count >= 4 then
-						--(#count)
-						--Section.Size.Y.Scale = Section.Size.Y.Scale + 0.09
-						Section.Size = Section.Size + UDim2.new(0, 0, 0.09, 0)
-					end
-				end)
-	
-	
-				local itemslib = {}
-	
-				function itemslib:Toggle(name, callback)
-	
-					local Toggle = Instance.new("ImageButton")
-					local Toggle_Title = Instance.new("TextLabel")
-					local ToggleButton = Instance.new("ImageButton")
-					local ToggleKey = Instance.new("ImageButton")
-					local UIGradient_toggleKey = Instance.new("UIGradient")
-	
-					local toggle = {}
-					toggle.cb = callback
-	
-					Toggle.Name = name.."Toggle"
-					Toggle.Parent = Section_Items
-					Toggle.BackgroundTransparency = 1.000
-					Toggle.BorderSizePixel = 0
-					Toggle.Size = UDim2.new(1, 0, 0, 30)
-					Toggle.ZIndex = 2
-					Toggle.Image = "rbxassetid://5028857472"
-					Toggle.ImageColor3 = Color3.fromRGB(41, 43, 49)
-					Toggle.ScaleType = Enum.ScaleType.Slice
-					Toggle.SliceCenter = Rect.new(2, 2, 298, 298)
-	
-					Toggle_Title.Name = name.."Toggle_Title"
-					Toggle_Title.Parent = Toggle
-					Toggle_Title.AnchorPoint = Vector2.new(0, 0.5)
-					Toggle_Title.BackgroundTransparency = 1.000
-					Toggle_Title.Position = UDim2.new(0, 10, 0.5, 1)
-					Toggle_Title.Size = UDim2.new(0.5, 0, 1, 0)
-					Toggle_Title.ZIndex = 3
-					Toggle_Title.Font = Enum.Font.Gotham
-					Toggle_Title.Text = name
-					Toggle_Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-					Toggle_Title.TextSize = 12.000
-					Toggle_Title.TextTransparency = 0.100
-					Toggle_Title.TextXAlignment = Enum.TextXAlignment.Left
-	
-					ToggleButton.Name = name.."ToggleButton"
-					ToggleButton.Parent = Toggle
-					ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					ToggleButton.BackgroundTransparency = 1.000
-					ToggleButton.BorderSizePixel = 0
-					ToggleButton.Position = UDim2.new(0.828832507, 0, 0, 0)
-					ToggleButton.Size = UDim2.new(0.171167538, 0, 1.13333273, 0)
-					ToggleButton.ZIndex = 2
-					ToggleButton.Image = "rbxassetid://7648804720"
-					ToggleButton.ImageColor3 = Color3.fromRGB(33, 33, 39)
-					ToggleButton.ScaleType = Enum.ScaleType.Fit
-	
-					ToggleKey.Name = name.."ToggleKey"
-					ToggleKey.Parent = ToggleButton
-					ToggleKey.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
-					ToggleKey.BackgroundTransparency = 1.000
-					ToggleKey.BorderSizePixel = 0
-					ToggleKey.Position = UDim2.new(0.119999997, 0, 0.25, 0)
-					ToggleKey.Size = UDim2.new(0.319999993, 0, 0.449999988, 0)
-					ToggleKey.ZIndex = 2
-					ToggleKey.Image = "rbxassetid://6872700230"
-	
-					UIGradient_toggleKey.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(121, 130, 148)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(165, 176, 199))}
-					UIGradient_toggleKey.Name = "UIGradient_toggleKey"
-					UIGradient_toggleKey.Parent = ToggleKey
-	
-					local deb = false
-	
-					local function LTDRHSA_fake_script() -- ToggleButton.ToggleButton 
-						local script = Instance.new('LocalScript', ToggleKey)
-						local anim = false
-	
-						script.Parent.MouseButton1Click:Connect(function()
-							if deb == false and anim == false then
-								anim = true
-								script.Parent.UIGradient_toggleKey.Color = ColorSequence.new({
-									ColorSequenceKeypoint.new(0, Color3.new(1, 0.368627, 1)),
-									ColorSequenceKeypoint.new(1, Color3.new(0.321569, 0.188235, 1))
-								})
-	
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.688, 0,0.45, 0), UDim2.new(0.156, 0,0.25, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1)
-								wait(0.1)
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.18, 0,0.45, 0), UDim2.new(0.664, 0,0.25, 0), Enum.EasingDirection.In, Enum.EasingStyle.Linear, 0.1)
-								wait(0.11)
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.32, 0,0.45, 0), UDim2.new(0.5, 0,0.25, 0), Enum.EasingDirection.In, Enum.EasingStyle.Linear, 0.2)
-								wait(0.2)
-	
-								deb	= true
-								pcall(callback, deb)
-	
-	
-							elseif deb == true and anim == true then
-								anim = false
-								script.Parent.UIGradient_toggleKey.Color = ColorSequence.new({
-									ColorSequenceKeypoint.new(0, Color3.new(0.47451, 0.509804, 0.580392)),
-									ColorSequenceKeypoint.new(1, Color3.new(0.647059, 0.690196, 0.780392))
-								})
-	
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.688, 0,0.45, 0), UDim2.new(0.156, 0,0.25, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1)
-								wait(0.1)
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.204, 0,0.45, 0), UDim2.new(0.156, 0,0.25, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.1)
-								wait(0.11)
-								script.Parent:TweenSizeAndPosition(UDim2.new(0.32, 0,0.45, 0), UDim2.new(0.12, 0,0.25, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2)
-								wait(0.2)
-								deb = false
-								pcall(callback, deb)
-	
-							end
-						end)
-	
-	
-					end
-					coroutine.wrap(LTDRHSA_fake_script)()
-	
-	
-	
-				end
-	
-				function itemslib:TextBox(text, callback)
-	
-					local TextBox = Instance.new("TextBox")
-	
-					TextBox.Parent = Section_Items
-					TextBox.BackgroundColor3 = Color3.fromRGB(41, 43, 49)
-					TextBox.BorderSizePixel = 0
-					TextBox.ClipsDescendants = true
-					TextBox.Size = UDim2.new(1, 0, 0, 30)
-					TextBox.ZIndex = 2
-					TextBox.Font = Enum.Font.Gotham
-					TextBox.Text = ""
-					TextBox.PlaceholderText = text
-					TextBox.TextColor3 = Color3.fromRGB(235, 235, 235)
-					TextBox.TextSize = 14.000
-	
-					TextBox.FocusLost:Connect(function()
-						pcall(callback, TextBox.Text)
-					end)
-				end
-	
-				function itemslib:CheckBox(name, callback)
-					local CheckBox = Instance.new("ImageButton")
-					local CheckBoxName = Instance.new("TextLabel")
-					local check_box = Instance.new("ImageButton")
-					local UIGradient_Checkbox = Instance.new("UIGradient")
-	
-					CheckBox.Name = name.."CheckBox"
-					CheckBox.Parent = Section_Items
-					CheckBox.BackgroundTransparency = 1.000
-					CheckBox.BorderSizePixel = 0
-					CheckBox.Size = UDim2.new(1, 0, 0, 30)
-					CheckBox.ZIndex = 2
-					CheckBox.Image = "rbxassetid://5028857472"
-					CheckBox.ImageColor3 = Color3.fromRGB(41, 43, 49)
-					CheckBox.ScaleType = Enum.ScaleType.Slice
-					CheckBox.SliceCenter = Rect.new(2, 2, 298, 298)
-	
-					CheckBoxName.Name = name.."CheckBoxName"
-					CheckBoxName.Parent = CheckBox
-					CheckBoxName.AnchorPoint = Vector2.new(0, 0.5)
-					CheckBoxName.BackgroundTransparency = 1.000
-					CheckBoxName.Position = UDim2.new(0, 10, 0.5, 1)
-					CheckBoxName.Size = UDim2.new(0.5, 0, 1, 0)
-					CheckBoxName.ZIndex = 3
-					CheckBoxName.Font = Enum.Font.Gotham
-					CheckBoxName.Text = name
-					CheckBoxName.TextColor3 = Color3.fromRGB(255, 255, 255)
-					CheckBoxName.TextSize = 12.000
-					CheckBoxName.TextTransparency = 0.100
-					CheckBoxName.TextXAlignment = Enum.TextXAlignment.Left
-	
-					check_box.Name = name.."check_box"
-					check_box.Parent = CheckBox
-					check_box.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					check_box.BackgroundTransparency = 1.000
-					check_box.LayoutOrder = 1
-					check_box.Position = UDim2.new(0.876999974, 0, 0.133000001, 0)
-					check_box.Size = UDim2.new(0.0700000003, 0, 0.699999988, 0)
-					check_box.ZIndex = 2
-					check_box.Image = "rbxassetid://3926311105"
-					check_box.ImageRectOffset = Vector2.new(940, 784)
-					check_box.ImageRectSize = Vector2.new(48, 48)
-	
-					UIGradient_Checkbox.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(121, 130, 148)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(165, 176, 199))}
-					UIGradient_Checkbox.Name = "UIGradient_Checkbox"
-					UIGradient_Checkbox.Parent = check_box
-					local active = false
-	
-					local function CTMIFK_fake_script() -- check_box.LocalScript 
-						local script = Instance.new('LocalScript', check_box)
-						local anim = false
-						local cc = script.Parent
-	
-						script.Parent.MouseButton1Click:Connect(function()
-							if not active and not anim then
-								anim =  true
-								cc.Position = UDim2.fromScale(0.884, 0.2)
-								cc.Size = UDim2.fromScale(0.06, 0.6)
-								cc.ImageRectOffset = Vector2.new(4, 836)
-	
-								script.Parent.UIGradient_Checkbox.Color = ColorSequence.new({
-									ColorSequenceKeypoint.new(0, Color3.new(1, 0.368627, 1)),
-									ColorSequenceKeypoint.new(1, Color3.new(0.490196, 0.192157, 1))
-								})
-	
-								wait(0.1)
-								cc:TweenSizeAndPosition(UDim2.new(0.07, 0,0.7, 0),UDim2.new(0.877, 0,0.133, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.2) wait(0.2) -- default
-								active = true
-								pcall(callback, active)
-							elseif active and anim then
-								anim = false
-								cc.ImageRectOffset = Vector2.new(940, 784)
-	
-								script.Parent.UIGradient_Checkbox.Color = ColorSequence.new({
-									ColorSequenceKeypoint.new(0, Color3.new(0.47451, 0.509804, 0.580392)),
-									ColorSequenceKeypoint.new(1, Color3.new(0.647059, 0.690196, 0.780392))
-								})
-	
-								active = false
-								pcall(callback, active)
-							end
-						end)
-					end
-					coroutine.wrap(CTMIFK_fake_script)()
-				end
-	
-				function itemslib:Button(name, callback)
-	
-					local Button = Instance.new("ImageButton")
-					local Circle = Instance.new("ImageLabel")
-					local ButtonName = Instance.new("TextLabel")
-	
-	
-					local btn = {}
-					btn.cb = callback
-	
-					local buttonT = {}
-	
-	
-					Button.Name = name.."Button"
-					Button.Parent = Section_Items
-					Button.BackgroundTransparency = 1.000
-					Button.BorderSizePixel = 0
-					Button.Size = UDim2.new(1, 0, 0, 30)
-					Button.ZIndex = 2
-					Button.Image = "rbxassetid://5028857472"
-					Button.ImageColor3 = Color3.fromRGB(41, 43, 49)
-					Button.ScaleType = Enum.ScaleType.Slice
-					Button.SliceCenter = Rect.new(2, 2, 298, 298)
-	
-	
-					ButtonName.Name = name.."ButtonName"
-					ButtonName.Parent = Button
-					ButtonName.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-					ButtonName.BackgroundTransparency = 1.000
-					ButtonName.Position = UDim2.new(0.0342333987, 0, 0.233333334, 0)
-					ButtonName.Size = UDim2.new(0, 276, 0, 17)
-					ButtonName.ZIndex = 5
-					ButtonName.Font = Enum.Font.FredokaOne
-					ButtonName.Text = name
-					ButtonName.TextColor3 = Color3.fromRGB(255, 255, 255)
-					ButtonName.TextSize = 14.000
-					ButtonName.TextXAlignment = Enum.TextXAlignment.Left
-	
-	
-					Button.MouseButton1Click:Connect(function()
-						pcall(btn.cb)
-					end)
-	
-					local function CDEQJ_fake_script() 
-						local Circle = Instance.new("ImageLabel")
-						local script = Instance.new('LocalScript', Button)
-	
-						Circle.Name = "Circle"
-						Circle.Parent = script
-						Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-						Circle.BackgroundTransparency = 1.000
-						Circle.ZIndex = 3
-						Circle.Image = "rbxassetid://266543268"
-						Circle.ImageColor3 = Color3.fromRGB(65, 68, 79)
-						Circle.ImageTransparency = 0.300
-	
-						local m = game.Players.LocalPlayer:GetMouse()
-						local guiObject = script.Parent
-						local function CircleClick(Button, X, Y)
-							coroutine.resume(coroutine.create(function()
-								Button.ClipsDescendants = true
-								local Circle = script:WaitForChild("Circle"):Clone()
-								Circle.Parent = Button
-								local NewX = X - Circle.AbsolutePosition.X
-								local NewY = Y - Circle.AbsolutePosition.Y
-								Circle.Position = UDim2.new(0, NewX, 0, NewY)
-								local Size = 0
-								if Button.AbsoluteSize.X > Button.AbsoluteSize.Y then
-									Size = Button.AbsoluteSize.X*1.5
-								elseif Button.AbsoluteSize.X < Button.AbsoluteSize.Y then
-									Size = Button.AbsoluteSize.Y*1.5
-								elseif Button.AbsoluteSize.X == Button.AbsoluteSize.Y then																																																																														
-									Size = Button.AbsoluteSize.X*1.5
-								end
-								local Time = 0.5
-								Circle:TweenSizeAndPosition(UDim2.new(0, Size, 0, Size), UDim2.new(0.5, -Size/2, 0.5, -Size/2), "Out", "Quad", Time, false, nil)
-								for i = 1,10 do
-									Circle.ImageTransparency = Circle.ImageTransparency + 0.01
-									wait(Time/10)
-								end
-								for i = .5, 1, .1 do
-									Circle.ImageTransparency = i
-									wait()
-								end
-								wait(1)
-								Circle:Destroy()
-							end))
-						end
-	
-						guiObject.MouseButton1Down:connect(function()
-							CircleClick(guiObject, m.X, m.Y) 
-						end)
-					end
-					coroutine.wrap(CDEQJ_fake_script)()
-	
-				end
-	
-				function itemslib:Label(text)
-					local Label = Instance.new("TextLabel")
-	
-	
-					Label.Name = "Label"
-					Label.Text = text
-					Label.Parent = Section_Items
-					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					Label.BackgroundTransparency = 1
-					Label.BorderSizePixel = 0
-					Label.ClipsDescendants = true
-					Label.Size = UDim2.new(1, 0, 0, 30)
-					Label.ZIndex = 2
-					Label.Font = Enum.Font.Gotham
-					Label.TextColor3 = Color3.fromRGB(239, 239, 239)
-					Label.TextSize = 13
-					Label.TextWrapped = true
-					Label.TextXAlignment = Enum.TextXAlignment.Left
-				end
-	
-	
-				function itemslib:Slider(text, min, max, callback)
-	
-					local Slider = Instance.new("TextButton")
-					local Title = Instance.new("TextLabel")
-					local SliderFrame = Instance.new("Frame")
-					local SliderFrameCorner = Instance.new("UICorner")
-					local SliderIndicator = Instance.new("Frame")
-					local SliderIndicatorCorner = Instance.new("UICorner")
-					local UIGradient = Instance.new("UIGradient")
-					local SliderCorner = Instance.new("UICorner")
-					local Value = Instance.new("TextLabel")
-	
-	
-					Slider.Name = "Slider"
-					Slider.Parent = Section_Items
-					Slider.BackgroundColor3 = Color3.fromRGB(41, 43, 49)
-					Slider.Position = UDim2.new(0, 0, 0.438881785, 0)
-					Slider.Size = UDim2.new(0, 292, 0, 38)
-					Slider.ZIndex = 5
-					Slider.AutoButtonColor = false
-					Slider.Font = Enum.Font.Gotham
-					Slider.Text = ""
-					Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
-					Slider.TextSize = 14.000
-	
-					Title.Name = "Title"
-					Title.Parent = Slider
-					Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					Title.BackgroundTransparency = 1.000
-					Title.Position = UDim2.new(0.0342465751, 0, 0.105263159, 0)
-					Title.Size = UDim2.new(0, 122, 0, 11)
-					Title.ZIndex = 5
-					Title.Font = Enum.Font.Gotham
-					Title.Text = text
-					Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-					Title.TextScaled = true
-					Title.TextSize = 14.000
-					Title.TextWrapped = true
-					Title.TextXAlignment = Enum.TextXAlignment.Left
-	
-					SliderFrame.Name = "SliderFrame"
-					SliderFrame.Parent = Slider
-					SliderFrame.BackgroundColor3 = Color3.fromRGB(33, 33, 39)
-					SliderFrame.Position = UDim2.new(0.0223324038, 0, 0.563265979, 0)
-					SliderFrame.Size = UDim2.new(0, 276, 0, 11)
-					SliderFrame.ZIndex = 5
-	
-					SliderFrameCorner.Name = "SliderFrameCorner"
-					SliderFrameCorner.Parent = SliderFrame
-	
-					SliderIndicator.Name = "SliderIndicator"
-					SliderIndicator.Parent = SliderFrame
-					SliderIndicator.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					SliderIndicator.BorderSizePixel = 0
-					SliderIndicator.Position = UDim2.new(-0.00260408712, 0, 0.0363603085, 0)
-					SliderIndicator.Size = UDim2.new(0, 0, 0, 11)
-					SliderIndicator.ZIndex = 5
-	
-					SliderIndicatorCorner.Name = "SliderIndicatorCorner"
-					SliderIndicatorCorner.Parent = SliderIndicator
-	
-					UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 94, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(82, 48, 255))}
-					UIGradient.Parent = SliderIndicator
-	
-					SliderCorner.CornerRadius = UDim.new(0, 6)
-					SliderCorner.Name = "SliderCorner"
-					SliderCorner.Parent = Slider
-	
-					Value.Name = "Value"
-					Value.Parent = Slider
-					Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					Value.BackgroundTransparency = 1.000
-					Value.Position = UDim2.new(0.455182016, 0, 0, 0)
-					Value.Size = UDim2.new(0, 149, 0, 20)
-					Value.ZIndex = 5
-					Value.Font = Enum.Font.Gotham
-					Value.Text = "0"
-					Value.TextColor3 = Color3.fromRGB(255, 255, 255)
-					Value.TextSize = 14.000
-					Value.TextXAlignment = Enum.TextXAlignment.Right
-	
-	
-	
-					local function ALNWI_fake_script() -- SliderFrame.LocalScript 
-						local script = Instance.new('LocalScript', SliderFrame)
-	
-						local SliderFrame = script.Parent
-						local max = max
-						local min = min
-						local SliderIndicator = script.Parent.SliderIndicator
-						local Value = script.Parent.Parent.Value
-						local UserInputService = game:GetService("UserInputService")
-						local dragging = false
-	
-						local function slide(input)
-							local pos =
-								UDim2.new(
-									math.clamp((input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1),
-									0,
-									0,
-									11
+
+		mouse.KeyDown:connect(function(key2)
+			if key2 == bind2 then
+				_G.HeadSize = 50
+				_G.Disabled = true
+
+				if _G.Disabled then
+					for i, v in next, game:GetService("Players"):GetPlayers() do
+						if v.Name ~= game:GetService("Players").LocalPlayer.Name then
+							pcall(function()
+								v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
+								v.Character.HumanoidRootPart.Transparency = 0.9
+								v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+								v.Character.HumanoidRootPart.Material = "Neon"
+								v.Character.HumanoidRootPart.CanCollide = false
+								game.StarterGui:SetCore(
+									"SendNotification",
+									{ Title = "Hitbox Applied,press N.", Text = "Bind Button is N.", Duration = 0 }
 								)
-							SliderIndicator:TweenSize(pos, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.3, true)
-							local val = math.floor(((pos.X.Scale * max) / max) * (max - min) + min)
-							Value.Text = tostring(val)
-							pcall(callback, val)
+							end)
 						end
-	
-						SliderFrame.InputBegan:Connect(
-							function(input)
-								if input.UserInputType == Enum.UserInputType.MouseButton1 then
-									slide(input)
-									dragging = true
-								end
-							end
-						)
-	
-						SliderFrame.InputEnded:Connect(
-							function(input)
-								if input.UserInputType == Enum.UserInputType.MouseButton1 then
-									dragging = false
-								end
-							end
-						)
-	
-						UserInputService.InputChanged:Connect(
-							function(input)
-								if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-									slide(input)
-								end
-							end
-						)
 					end
-					coroutine.wrap(ALNWI_fake_script)()
-	
-	
 				end
-	
-	
-				return itemslib;	
 			end
-			return sec;
-	
-		end
-		return TabLib;
-	
-	end
-	
-	
-	----------------------------------------------------------
-	
-	local main = Lib:Window("GPO - Xno")
-	local tab1 = main:Tab("E",true,0,6912528951)
-	local  sec1t1 = tab1:Section("WIP")
-	
-	
-
-	
-	
-	--local  sec1t11 = tab1:Section("Auto Walk")
-	
-	
-	
-	----------------------------------------------------------
-	local tab133 = main:Tab("Misc",false,0.5,6896084251)
-	
-	local  sec1t333 = tab133:Section("Misc")
-	
-	sec1t333:Button("Join New Server",function()
-		local amount = {}
-		for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
-			if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
-				amount[#amount + 1] = v.id
-			end
-		end
-		if #amount > 0 then
-			-- print'Joinning new server'
-			game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, amount[math.random(1, #amount)])
-		else
-			-- print("No server found")
-		end
-	end)
-	
-	sec1t333:Button("Anti AFK",function()
-		local bb = game:service "VirtualUser"
-		game:service "Players".LocalPlayer.Idled:connect(function()
-			bb:CaptureController()
-			bb:ClickButton2(Vector2.new())
-	
 		end)
-	end)
-	
-	----------------------------------------------------------
-	local tab3 = main:Tab("Local Player",false,0.5,6886981585)
-	local  sec1t33 = tab3:Section("Local Player")
-	
-	
-	sec1t33:Toggle("Walk On Water",function(t)
-		getgenv().tt1 = t
-		local part = Instance.new("Part", game:GetService("Workspace"))
-		part.Size = Vector3.new(25.795, 0.001, 25.86)
-		part.Name = "Particles83"
-		part.Anchored = true
-		while wait() do
-			if getgenv().tt1 then
-				local humP= game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-				part.Transparency = 1
-				part.Position = Vector3.new(humP.X, -3, humP.Z)
-			elseif game.Workspace:FindFirstChild("Particles83") then
-				game.Workspace.Particles83:Destroy()
-			end
-		end
-	end)
-	
-	sec1t33:Slider("WalkSpeed", 16, 100, function(t)
+	end,
+})
 
-		getgenv().Speed = 70;
-		local mt = getrawmetatable(game)
-		local old = mt.__newindex
-		setreadonly(mt, false)
-		mt.__newindex = newcclosure(function(t,k,v)
-			pcall(function()
-				if t == game:GetService("Players").LocalPlayer.Character.Humanoid and k == "WalkSpeed" then
-					v = getgenv().Speed;
-				end
-			end)
-			return old(t,k,v)
-		end)
-	end)	
-	sec1t33:Slider("JumpPower", 50, 200, function(t)
-
-		getgenv().Speed = 70;
-		local mt = getrawmetatable(game)
-		local old = mt.__newindex
-		setreadonly(mt, false)
-		mt.__newindex = newcclosure(function(t,k,v)
-			pcall(function()
-				if t == game:GetService("Players").LocalPlayer.Character.Humanoid and k == "JumpPower" then
-					v = getgenv().Speed;
-				end
-			end)
-			return old(t,k,v)
-		end)
-	end)
-	sec1t33:Label("Put speed 20-29 and its auto no stun.")
-	
-	----------------------------------------------------------
-	
-
-	
-	local tab4 = main:Tab("Credits", false,0.5,7618724768)
-	local sec1t4 = tab4:Section("Script Credits")
-	
-	sec1t4:Button("Xno")
-	
+local Button = Main:CreateButton({
+	Name = "Hitbox Expander (N to toggle)",
+	Callback = function()
+		local cool = loadstring(game:HttpGet("https://raw.githubusercontent.com/XnoWs/GPO/main/Luas"))()
+	end,
+})
 
 
-
-
+local Toggle = Main:CreateToggle({
+Name = "No Fall Damage",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(value)
+        print(value)
+        _G.Falldamage = value
+    end,
+})
